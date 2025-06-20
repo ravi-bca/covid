@@ -1,0 +1,48 @@
+CREATE DATABASE securehospitals;
+--DROP TABLE IF EXISTS users_roles;
+--DROP TABLE IF EXISTS roles;
+--DROP TABLE IF EXISTS users;
+
+CREATE TABLE users (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  phone_number VARCHAR(20) NOT NULL,
+  email VARCHAR(256) NOT NULL,
+  password VARCHAR(64) NOT NULL,
+  first_name VARCHAR(25) NOT NULL,
+  last_name VARCHAR(25) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT pk_users PRIMARY KEY (id),
+  CONSTRAINT uq_users_email UNIQUE (email),
+  CONSTRAINT uq_users_phone_number UNIQUE (phone_number)
+);
+
+
+CREATE TABLE roles (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  name VARCHAR(45) NOT NULL,
+  CONSTRAINT pk_roles PRIMARY KEY (id),
+  CONSTRAINT uq_roles_name UNIQUE (name)
+);
+
+
+CREATE TABLE users_roles (
+  user_id BIGINT UNSIGNED NOT NULL,
+  role_id BIGINT UNSIGNED NOT NULL,
+  CONSTRAINT pk_users_roles PRIMARY KEY (user_id, role_id),
+  CONSTRAINT fk_users_roles_user FOREIGN KEY (user_id) REFERENCES users(id),
+  CONSTRAINT fk_users_roles_role FOREIGN KEY (role_id) REFERENCES roles(id)
+);
+
+INSERT INTO roles (name) VALUES ('USER');
+INSERT INTO roles (name) VALUES ('ADMIN');
+
+ CREATE TABLE test_bookings (
+    ->     id INT AUTO_INCREMENT PRIMARY KEY,
+    ->     test_name VARCHAR(255),
+    ->     full_name VARCHAR(100),
+    ->     email VARCHAR(100),
+    ->     phone VARCHAR(20),
+    ->     booking_date DATE,
+    ->     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    -> );
+Query OK, 0 rows affected (0.486 sec)
